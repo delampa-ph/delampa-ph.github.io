@@ -2,24 +2,28 @@
 
 :root {
     color-scheme: light dark;
+    --colorTransition: 0.20s;
+    --bodyTransition: 0.5s;
  }
 
  body {
     color: light-dark(#EAEFEF, #333446);
     background-color: light-dark(#333446, #EAEFEF);
     font-family: "Ancizar Sans";
-    transition: background-color 0.5s, color 0.5s;
+    transition: background-color var(--bodyTransition), color var(--bodyTransition);
  }
 
  a {
     color: light-dark(#333446, #EAEFEF);
     text-decoration: none;
- }
+    transition: color var(--colorTransition);
+}
 
  a:hover {
     color: light-dark(#EAEFEF, #333446);
     text-decoration: underline;
- }
+    transition: color var(--colorTransition);
+}
 
 .box {
     margin-inline: auto;
@@ -27,7 +31,6 @@
     margin-bottom: 2px;
     border-radius: 8px;
     padding: 8px;
-    /* width: 90%; */
     background-color: light-dark(#B8CFCE, #7F8CAA);
     color: light-dark(#333446, #EAEFEF);
  }
