@@ -1,30 +1,39 @@
- :root {
+@import url('https://fonts.googleapis.com/css2?family=Ancizar+Sans:ital,wght@0,100..1000;1,100..1000&display=swap');
+
+:root {
     color-scheme: light dark;
  }
 
  body {
     color: light-dark(#EAEFEF, #333446);
     background-color: light-dark(#333446, #EAEFEF);
+    font-family: "Ancizar Sans";
     transition: background-color 0.5s, color 0.5s;
  }
 
  a {
     color: light-dark(#333446, #EAEFEF);
+    text-decoration: none;
  }
 
  a:hover {
     color: light-dark(#EAEFEF, #333446);
+    text-decoration: underline;
  }
 
 .box {
     margin-inline: auto;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin-top: 2px;
+    margin-bottom: 2px;
     border-radius: 8px;
     padding: 8px;
-    width: 90%;
+    /* width: 90%; */
     background-color: light-dark(#B8CFCE, #7F8CAA);
     color: light-dark(#333446, #EAEFEF);
+ }
+
+ .boxCentered {
+    width: 90%;
  }
 
  .light {
@@ -32,6 +41,6 @@
  }
 
  .logo {
-    border-radius: 80%;
+    border-radius: 20%;
     border: 2px solid light-dark(#333446, #EAEFEF);
  }
