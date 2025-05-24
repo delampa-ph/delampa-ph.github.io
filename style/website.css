@@ -1,5 +1,37 @@
-h1 {
-    color: blue;
-    font-weight: bold;
-    font-style: italic;
-}
+ :root {
+    color-scheme: light dark;
+ }
+
+ body {
+    color: light-dark(#EAEFEF, #333446);
+    background-color: light-dark(#333446, #EAEFEF);
+    transition: background-color 0.5s, color 0.5s;
+ }
+
+ a {
+    color: light-dark(#333446, #EAEFEF);
+ }
+
+ a:hover {
+    color: light-dark(#EAEFEF, #333446);
+ }
+
+.box {
+    margin-inline: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 8px;
+    padding: 8px;
+    width: 90%;
+    background-color: light-dark(#B8CFCE, #7F8CAA);
+    color: light-dark(#333446, #EAEFEF);
+ }
+
+ .light {
+    color-scheme: light;
+ }
+
+ .logo {
+    border-radius: 80%;
+    border: 2px solid light-dark(#333446, #EAEFEF);
+ }
