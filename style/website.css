@@ -1,28 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Ancizar+Sans:ital,wght@0,100..1000;1,100..1000&display=swap');
 
 :root {
-    color-scheme: light dark;
-    --colorTransition: 0.20s;
-    --bodyTransition: 0.5s;
- }
-
- body {
-    color: light-dark(#EAEFEF, #333446);
-    background-color: light-dark(#333446, #EAEFEF);
-    font-family: "Ancizar Sans";
-    transition: background-color var(--bodyTransition), color var(--bodyTransition);
- }
-
- a {
-    color: light-dark(#333446, #EAEFEF);
-    text-decoration: none;
-    transition: color var(--colorTransition);
+   color-scheme: light dark;
+   --colorTransition: 0.20s;
+   --bodyTransition: 0.5s;
 }
 
- a:hover {
-    color: light-dark(#EAEFEF, #333446);
-    text-decoration: underline;
-    transition: color var(--colorTransition);
+body {
+   color: light-dark(#EAEFEF, #333446);
+   background-color: light-dark(#333446, #EAEFEF);
+   font-family: "Ancizar Sans";
+   transition: background-color var(--bodyTransition), color var(--bodyTransition);
+}
+
+a {
+   color: light-dark(#333446, #EAEFEF);
+   text-decoration: none;
+   transition: color var(--colorTransition);
+}
+
+a:hover {
+   color: light-dark(#EAEFEF, #333446);
+   text-decoration: underline;
+   transition: color var(--colorTransition);
 }
 
 .box {
@@ -33,11 +33,18 @@
     padding: 8px;
     background-color: light-dark(#B8CFCE, #7F8CAA);
     color: light-dark(#333446, #EAEFEF);
- }
+}
 
- .boxCentered {
-    width: 90%;
- }
+.boxCentered {
+   width: 90%;
+}
+
+.portfolioContent {
+   border: 1px solid light-dark(#333446, #EAEFEF);
+   border-radius: 6px;
+   padding: 4px;
+   margin: 0.5em;
+}
 
  .light {
     color-scheme: light;
@@ -47,3 +54,24 @@
     border-radius: 20%;
     border: 2px solid light-dark(#333446, #EAEFEF);
  }
+
+/* HTML: <div class="loader"></div> */
+.loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid light-dark(#333446, #EAEFEF);
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+    }
+
+    @keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+} 
