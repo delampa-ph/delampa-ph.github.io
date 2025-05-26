@@ -1,10 +1,24 @@
 {
     "list-content": {
         "delampa-ph.github.io": {
-            "tools": ["html", "css", "js"]
+            "tools": ["html", "css", "javascript"]
         },
         "delampa-ph": {
             "tools": ["mkdwn"]
+        }
+    },
+    "list-filter": {
+        "html": {
+            "formalName": "HTML"
+        },
+        "css": {
+            "formalName": "CSS"
+        },
+        "javascript": {
+            "formalName": "Javascript"
+        },
+        "mkdwn": {
+            "formalName": "Markdown"
         }
     },
     "ignore-content": []

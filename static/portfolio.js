@@ -1,24 +1,26 @@
 const PORTFOLIO_FILTER_HTML = document.getElementById("portfolio-filter-checkbox")
 const PORTFOLIO_CONTENT_PARENT_HTML = document.getElementById("portfolio-container")
 
+let PORTFOLIO_CONTENT_LIST = [];
+let PORTFOLIO_ACTIVE_FILTER = new Set();
+
+const languageDict = {
+    "html"  : "devicon-html5-plain",
+    "css"   : "devicon-css3-plain",
+    "javascript"    : "devicon-javascript-plain",
+    "mkdwn" : "devicon-markdown-original"
+}
+
 function appendPortfolioContent(repo) {
-    const languageDict = {
-        "html"  : "devicon-html5-plain",
-        "css"   : "devicon-css3-plain",
-        "js"    : "devicon-javascript-plain",
-        "mkdwn" : "devicon-markdown-original"
-    }
-    
     let setTool = new Set();
     repo.tools.sort()
     for (const i of repo.tools) {
-        if (languageDict[i] != undefined)
-            setTool.add(i);
+        setTool.add(i);
     }
     
     let toolUsed = '';
     for (const it of setTool) {
-        toolUsed += `<i class="fs-5 ${languageDict[it]}"></i>`
+        toolUsed += `<i class="fs-5 ${(languageDict[it] == null) ? "bi bi-question-square-fill" : languageDict[it]}"></i>`
     }
 
     PORTFOLIO_CONTENT_PARENT_HTML.innerHTML += `
@@ -39,13 +41,36 @@ function appendPortfolioContent(repo) {
 `;
 }
 
-async function fetchCustomPortfolio() {
-    const jsonObj = await (await fetch("/static/custom_portfolio.json")).json();
-    return jsonObj;
+function appendPortfolioFilter(filter) {
+    let iconOutput = (languageDict[filter.type] != undefined) ? languageDict[filter.type] : "bi bi-question-square-fill";
+
+    const formCheck = document.createElement("div");
+    formCheck.setAttribute("class", "form-check");
+
+    const formCheckInput = document.createElement("input");
+    formCheckInput.setAttribute("class", "form-check-input");
+    formCheckInput.setAttribute("type", "checkbox");
+    formCheckInput.addEventListener('change', (ev) => {
+        if (formCheckInput.checked) {
+            PORTFOLIO_ACTIVE_FILTER.add(filter.type);
+        } else {
+            PORTFOLIO_ACTIVE_FILTER.delete(filter.type);
+        }
+        updatePortfolioContent();
+    });
+
+    const formCheckLabel = document.createElement("label")
+    formCheckLabel.innerHTML = `<i class="fs-5 ${iconOutput}"></i> ${filter.formalName}`
+
+    formCheck.append(formCheckInput);
+    formCheck.append(formCheckLabel);
+
+    PORTFOLIO_FILTER_HTML.append(formCheck);
 }
 
 async function fetchGHRepos() {
-    const jsonObj = await (await fetch("/static/test_repo.json")).json(); 
+    // const jsonObj = await (await fetch("/static/test_repo.json")).json(); 
+    const jsonObj = await (await fetch("https://api.github.com/users/delampa-ph/repos")).json(); 
     const contentList = [];
 
     for(const it of jsonObj) {
@@ -64,7 +89,7 @@ async function fetchGHRepos() {
 
         const curContent = {
             "name":         it.name,
-            "desc":         it.description,
+            "desc":         (it.description != undefined) ? it.description : "",
             "link":         it.html_url,
             "likeCount":    it.stargazers_count,
             "watchCount":   it.watchers_count,
@@ -78,36 +103,79 @@ async function fetchGHRepos() {
     return contentList;
 }
 
-function updatePortfolioContent() {
-    const finalList = []
-    fetchCustomPortfolio()
-    .then((customPortfolio) => {
-        fetchGHRepos()
-        .then((repoList) => {
-            for (const i of repoList) {
-                if (customPortfolio["ignore-content"].includes(i.name))
-                    continue;
+async function initializePortfolioList() {
+    if (PORTFOLIO_CONTENT_LIST.length > 0)
+        return;
 
-                if (customPortfolio["list-content"][i.name] != undefined) {
-                    const target = customPortfolio["list-content"][i.name];
-                    for(const cpKey in target) {
-                        i[cpKey] = target[cpKey];
-                    }
-                }
-                finalList.push(i);
-            }
-        })
-        .finally(() => {
-            finalList.sort((a, b) => {
-                return a.rawDate < b.rawDate;
-            });
-            console.log(finalList);
+    const customPortfolio = await(await fetch("/static/custom_portfolio.json")).json();
+    const repoList  = await fetchGHRepos();
 
-            for (const i of finalList) {
-                appendPortfolioContent(i);
+    const filterSet = new Set();
+
+    for(const it of repoList) {
+        if (customPortfolio["ignore-content"].includes(it.name))
+            continue;
+        
+        if (customPortfolio["list-content"][it.name] != undefined) {
+            const target = customPortfolio["list-content"][it.name];
+            for(const cpKey in target) {
+                it[cpKey] = target[cpKey];
             }
-        });
+        }
+
+        for(const j of it["tools"]) {
+            filterSet.add(j);
+        }
+
+        PORTFOLIO_CONTENT_LIST.push(it);
+    }
+
+    let finalizedFilterList = [];
+    for (const it of filterSet) {
+        finalizedFilterList.push(it);
+    }
+    finalizedFilterList.sort((a, b) => {
+        const targetA = customPortfolio["list-filter"][a]
+        const targetB = customPortfolio["list-filter"][b]
+        if (targetA == undefined || targetB == undefined)
+            return 1;
+        return targetA.formalName > targetB.formalName;
     })
+
+    for (const it of finalizedFilterList) {
+        const targetItem = customPortfolio["list-filter"][it];
+        appendPortfolioFilter({
+            type: it,
+            formalName: (targetItem == undefined) ? it : targetItem.formalName 
+        });
+    }
+
+    PORTFOLIO_CONTENT_LIST.sort((a, b) => {
+        return a.rawDate < b.rawDate;
+    });
+}
+
+function updatePortfolioContent() {
+    PORTFOLIO_CONTENT_PARENT_HTML.innerHTML = ""
+    initializePortfolioList().then(() => {
+        for(const it of PORTFOLIO_CONTENT_LIST) {
+            const occupiedContent = new Set();
+            if (PORTFOLIO_ACTIVE_FILTER.size == 0) {
+                appendPortfolioContent(it);
+            } else {
+                let maxFilter = 0;
+                for (const targetFilter of it.tools) {
+                    if (PORTFOLIO_ACTIVE_FILTER.has(targetFilter))
+                        maxFilter++;
+                }
+
+                if (maxFilter == PORTFOLIO_ACTIVE_FILTER.size && !occupiedContent.has(it)) {
+                    occupiedContent.add(it);
+                    appendPortfolioContent(it);
+                }
+            }
+        }
+    });
 }
 
 updatePortfolioContent();
