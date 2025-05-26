@@ -69,8 +69,10 @@ function appendPortfolioFilter(filter) {
 }
 
 async function fetchGHRepos() {
-    // const jsonObj = await (await fetch("/static/test_repo.json")).json(); 
-    const jsonObj = await (await fetch("https://api.github.com/users/delampa-ph/repos")).json(); 
+    const isLocal = document.location.toString().match("127.0.0.1");
+    const jsonObj = await (await fetch(
+        isLocal ? "/static/test_repo.json" : "https://api.github.com/users/delampa-ph/repos"
+    )).json();
     const contentList = [];
 
     for(const it of jsonObj) {
@@ -158,6 +160,10 @@ async function initializePortfolioList() {
 function updatePortfolioContent() {
     PORTFOLIO_CONTENT_PARENT_HTML.innerHTML = ""
     initializePortfolioList().then(() => {
+        for(const it of document.getElementsByClassName("loaderSpace")) {
+            it.setAttribute("style", "display: none;")
+        }
+
         for(const it of PORTFOLIO_CONTENT_LIST) {
             const occupiedContent = new Set();
             if (PORTFOLIO_ACTIVE_FILTER.size == 0) {

@@ -55,6 +55,11 @@ a:hover {
     border: 2px solid light-dark(#333446, #EAEFEF);
  }
 
+.loaderSpace {
+   text-align: center;
+   width: 100%;
+}
+
 /* HTML: <div class="loader"></div> */
 .loader {
     width: 48px;
