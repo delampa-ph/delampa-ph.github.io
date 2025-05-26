@@ -1,0 +1,11 @@
+{
+    "list-content": {
+        "delampa-ph.github.io": {
+            "tools": ["html", "css", "js"]
+        },
+        "delampa-ph": {
+            "tools": ["mkdwn"]
+        }
+    },
+    "ignore-content": []
+}

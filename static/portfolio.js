@@ -6,18 +6,14 @@ function appendPortfolioContent(repo) {
         "html"  : "devicon-html5-plain",
         "css"   : "devicon-css3-plain",
         "js"    : "devicon-javascript-plain",
+        "mkdwn" : "devicon-markdown-original"
     }
     
     let setTool = new Set();
     repo.tools.sort()
     for (const i of repo.tools) {
-        switch(i) {
-        case "html":
-        case "css":
-        case "js":
+        if (languageDict[i] != undefined)
             setTool.add(i);
-            break;
-        }
     }
     
     let toolUsed = '';
@@ -43,22 +39,75 @@ function appendPortfolioContent(repo) {
 `;
 }
 
-appendPortfolioContent({
-    name: "Web Portfolio",
-    desc: "My portfolio website.",
-    link: "https://youtube.com",
-    likeCount: 4213,
-    watchCount: 598,
-    date: "05-25-2025",
-    tools: ["html", "js", "css"]
-})
+async function fetchCustomPortfolio() {
+    const jsonObj = await (await fetch("/static/custom_portfolio.json")).json();
+    return jsonObj;
+}
 
-appendPortfolioContent({
-    name: "Space Invader",
-    desc: "Recreation of space invader, playable in the web!",
-    link: "/",
-    likeCount: 102,
-    watchCount: 24,
-    date: "05-22-2025",
-    tools: ["js"]
-})
+async function fetchGHRepos() {
+    const jsonObj = await (await fetch("/static/test_repo.json")).json(); 
+    const contentList = [];
+
+    for(const it of jsonObj) {
+        let outputDate = "UNKNOWN";
+        let rawDate = 0;
+
+        if (it.updated_at != undefined) {
+            const curDate = Date.parse(it.updated_at);
+            let year = new Intl.DateTimeFormat('en', {year: "numeric"}).format(curDate);
+            let month = new Intl.DateTimeFormat('en', {month: "2-digit"}).format(curDate);
+            let day = new Intl.DateTimeFormat('en', {day: "2-digit"}).format(curDate);
+            outputDate = `${year}/${month}/${day}`
+
+            rawDate = curDate;
+        }
+
+        const curContent = {
+            "name":         it.name,
+            "desc":         it.description,
+            "link":         it.html_url,
+            "likeCount":    it.stargazers_count,
+            "watchCount":   it.watchers_count,
+            "date":         outputDate,
+            "rawDate":      rawDate,
+            "tools":        (it.language != undefined) ? [(it.language).toLowerCase()] : []
+        }
+
+        contentList.push(curContent);
+    }
+    return contentList;
+}
+
+function updatePortfolioContent() {
+    const finalList = []
+    fetchCustomPortfolio()
+    .then((customPortfolio) => {
+        fetchGHRepos()
+        .then((repoList) => {
+            for (const i of repoList) {
+                if (customPortfolio["ignore-content"].includes(i.name))
+                    continue;
+
+                if (customPortfolio["list-content"][i.name] != undefined) {
+                    const target = customPortfolio["list-content"][i.name];
+                    for(const cpKey in target) {
+                        i[cpKey] = target[cpKey];
+                    }
+                }
+                finalList.push(i);
+            }
+        })
+        .finally(() => {
+            finalList.sort((a, b) => {
+                return a.rawDate < b.rawDate;
+            });
+            console.log(finalList);
+
+            for (const i of finalList) {
+                appendPortfolioContent(i);
+            }
+        });
+    })
+}
+
+updatePortfolioContent();
