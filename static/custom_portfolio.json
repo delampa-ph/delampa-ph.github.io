@@ -7,17 +7,21 @@
             "tools": ["mkdwn"]
         }
     },
-    "list-filter": {
+    "list-tag": {
         "html": {
+            "icon": "devicon-html5-plain",
             "formalName": "HTML"
         },
         "css": {
+            "icon": "devicon-css3-plain",
             "formalName": "CSS"
         },
         "javascript": {
+            "icon": "devicon-javascript-plain",
             "formalName": "Javascript"
         },
         "mkdwn": {
+            "icon": "devicon-markdown-original",
             "formalName": "Markdown"
         }
     },

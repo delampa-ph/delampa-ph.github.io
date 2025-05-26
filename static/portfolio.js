@@ -4,12 +4,7 @@ const PORTFOLIO_CONTENT_PARENT_HTML = document.getElementById("portfolio-contain
 let PORTFOLIO_CONTENT_LIST = [];
 let PORTFOLIO_ACTIVE_FILTER = new Set();
 
-const languageDict = {
-    "html"  : "devicon-html5-plain",
-    "css"   : "devicon-css3-plain",
-    "javascript"    : "devicon-javascript-plain",
-    "mkdwn" : "devicon-markdown-original"
-}
+let PORTFOLIO_CUSTOM_TAGS = {}
 
 function appendPortfolioContent(repo) {
     let setTool = new Set();
@@ -20,7 +15,12 @@ function appendPortfolioContent(repo) {
     
     let toolUsed = '';
     for (const it of setTool) {
-        toolUsed += `<i class="fs-5 ${(languageDict[it] == null) ? "bi bi-question-square-fill" : languageDict[it]}"></i>`
+        let tmpIcon = "bi bi-question-square-fill"
+        try {
+            if (PORTFOLIO_CUSTOM_TAGS[it].icon != undefined)
+                tmpIcon = PORTFOLIO_CUSTOM_TAGS[it].icon;
+        } catch {}
+        toolUsed += `<i class="fs-5 ${tmpIcon}"></i>`
     }
 
     PORTFOLIO_CONTENT_PARENT_HTML.innerHTML += `
@@ -42,7 +42,11 @@ function appendPortfolioContent(repo) {
 }
 
 function appendPortfolioFilter(filter) {
-    let iconOutput = (languageDict[filter.type] != undefined) ? languageDict[filter.type] : "bi bi-question-square-fill";
+    let iconOutput = "bi bi-question-square-fill";
+    try {
+        if (PORTFOLIO_CUSTOM_TAGS[filter.type].icon != undefined)
+            iconOutput = PORTFOLIO_CUSTOM_TAGS[filter.type].icon;
+    } catch {}
 
     const formCheck = document.createElement("div");
     formCheck.setAttribute("class", "form-check");
@@ -69,7 +73,7 @@ function appendPortfolioFilter(filter) {
 }
 
 async function fetchGHRepos() {
-    const isLocal = document.location.toString().match("127.0.0.1");
+    const isLocal = document.location.host.match("^127\\.0\\.0\\.1");
     const jsonObj = await (await fetch(
         isLocal ? "/static/test_repo.json" : "https://api.github.com/users/delampa-ph/repos"
     )).json();
@@ -110,6 +114,7 @@ async function initializePortfolioList() {
         return;
 
     const customPortfolio = await(await fetch("/static/custom_portfolio.json")).json();
+    PORTFOLIO_CUSTOM_TAGS = customPortfolio["list-tag"];
     const repoList  = await fetchGHRepos();
 
     const filterSet = new Set();
@@ -137,15 +142,15 @@ async function initializePortfolioList() {
         finalizedFilterList.push(it);
     }
     finalizedFilterList.sort((a, b) => {
-        const targetA = customPortfolio["list-filter"][a]
-        const targetB = customPortfolio["list-filter"][b]
+        const targetA = customPortfolio["list-tag"][a]
+        const targetB = customPortfolio["list-tag"][b]
         if (targetA == undefined || targetB == undefined)
             return 1;
         return targetA.formalName > targetB.formalName;
     })
 
     for (const it of finalizedFilterList) {
-        const targetItem = customPortfolio["list-filter"][it];
+        const targetItem = customPortfolio["list-tag"][it];
         appendPortfolioFilter({
             type: it,
             formalName: (targetItem == undefined) ? it : targetItem.formalName 
