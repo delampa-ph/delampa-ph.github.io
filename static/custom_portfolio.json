@@ -11,10 +11,10 @@
         {
             "icon-type": "bi bi-joystick",
             "name": "Quick, Quack!",
-            "desc": "A 3D-platformer game to climb to the top and save your ducklings! Developed during internship with RLUX Studios. Now available on Switch!",
+            "desc": "A 3D-platformer game to climb to the top and save your ducklings! Developed during internship with RLUX Studios. Now available on Nintendo Switch!",
             "link": "https://www.nintendo.com/us/store/products/quick-quack-switch/",
             "bg-image": "https://assets.nintendo.com/image/upload/ar_16:9,b_auto:border,c_lpad/b_white/f_auto/q_auto/dpr_1.5/c_scale,w_1200/ncom/software/switch/70010000085695/add3254165cf56c8e4210ecc948068e8cdbe714325b2a9c672fb82fe7b3945da",
-            "date": "2025/3/13",
+            "date": "2025/03/13",
             "tools": ["c#", "unity"]
         }
     ],

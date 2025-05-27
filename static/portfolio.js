@@ -46,20 +46,22 @@ function appendPortfolioContent(repo) {
     }
 
     PORTFOLIO_CONTENT_PARENT_HTML.innerHTML += `
-<div class="portfolioContent" ${additionalTag}>
-    <div class="d-flex justify-content-between">
-        <a class="p-2 fw-bold fst-italic" href="${repo.link}"><i class="${iconType}"></i> ${repo.name}</a>
-        <div class="d-flex gap-1">
-            ${likeDisplay}
-            ${watchDisplay}
+<a href="${repo.link}">
+    <div class="portfolioContent" ${additionalTag}>
+        <div class="d-flex justify-content-between">
+            <span class="p-2 fw-bold fst-italic"><i class="${iconType}"></i> ${repo.name}</span>
+            <div class="d-flex gap-1">
+                ${likeDisplay}
+                ${watchDisplay}
+            </div>
+        </div>
+        <span class="p-2">${repo.desc}</span>
+        <div class="d-flex justify-content-between">
+            <div class="d-flex gap-1 p-2">${toolUsed}</div>
+            ${dateDisplay}
         </div>
     </div>
-    <span class="p-2">${repo.desc}</span>
-    <div class="d-flex justify-content-between">
-        <div class="d-flex gap-1 p-2">${toolUsed}</div>
-        ${dateDisplay}
-    </div>
-</div>    
+</a>    
 `;
 }
 
