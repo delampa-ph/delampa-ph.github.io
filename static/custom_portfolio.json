@@ -5,6 +5,13 @@
         },
         "delampa-ph": {
             "tools": ["mkdwn"]
+        },
+        "Python-Pursuit": {
+            "desc": "Groupwork game-project during 2nd year of 2022-2023 in Holy Angel University. A fork from the old account.",
+            "bg-image": "https://github.com/delampa-ph/Python-Pursuit/raw/master/assets/logo.jpg",
+            "date": "2023/05/05",
+            "rawDate": "1683216000000",
+            "tools": ["python"]
         }
     },
     "custom-content": [
@@ -42,6 +49,10 @@
         "mkdwn": {
             "icon": "devicon-markdown-original",
             "formalName": "Markdown"
+        },
+        "python": {
+            "icon": "devicon-python-plain",
+            "formalName": "Python"
         },
         "unity": {
             "icon": "devicon-unity-plain",
