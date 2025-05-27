@@ -22,20 +22,42 @@ function appendPortfolioContent(repo) {
         } catch {}
         toolUsed += `<i class="fs-5 ${tmpIcon}"></i>`
     }
+    const likeDisplay   = (repo.likeCount != undefined)     ? `<span class="p-2"><i class="bi bi-star-fill"> ${repo.likeCount}</i></span>` : ""
+    const watchDisplay  = (repo.watchCount != undefined)    ? `<span class="p-2"><i class="bi bi-eye-fill"> ${repo.watchCount}</i></span>` : "" 
+    const dateDisplay   = (repo.date != undefined)          ? `<i class="bi bi-stopwatch-fill p-2 fw-bold"> Last updated on ${repo.date}</i>` : ""
+
+    let additionalTag = "";
+    let iconType = "bi bi-github"
+    if (repo["bg-image"] != undefined) {
+        additionalTag = `
+        style="background-image: linear-gradient(rgba(255,255,255,0.0), rgba(50,50,50,0.5)), url(${repo["bg-image"]});
+        background-repeat: no-repeat;
+        background-size: cover;
+        text-shadow: light-dark(#EAEFEF, #333446) 0px 0px 8px,
+                    light-dark(#EAEFEF, #333446) 0px 0px 8px,
+                    light-dark(#EAEFEF, #333446) 0px 0px 8px,
+                    light-dark(#EAEFEF, #333446) 0px 0px 8px;
+        -webkit-font-smoothing: antialiased;
+        "`
+    }
+
+    if (repo["icon-type"] != undefined) {
+        iconType = repo["icon-type"]
+    }
 
     PORTFOLIO_CONTENT_PARENT_HTML.innerHTML += `
-<div class="portfolioContent">
+<div class="portfolioContent" ${additionalTag}>
     <div class="d-flex justify-content-between">
-        <a class="p-2 fw-bold fst-italic" href="${repo.link}"><i class="bi bi-github"></i> ${repo.name}</a>
+        <a class="p-2 fw-bold fst-italic" href="${repo.link}"><i class="${iconType}"></i> ${repo.name}</a>
         <div class="d-flex gap-1">
-            <span class="p-2"><i class="bi bi-star-fill"> ${repo.likeCount}</i></span>
-            <span class="p-2"><i class="bi bi-eye-fill"> ${repo.watchCount}</i></span>
+            ${likeDisplay}
+            ${watchDisplay}
         </div>
     </div>
     <span class="p-2">${repo.desc}</span>
     <div class="d-flex justify-content-between">
         <div class="d-flex gap-1 p-2">${toolUsed}</div>
-        <i class="bi bi-stopwatch-fill p-2 fw-bold"> Last updated on ${repo.date}</i>
+        ${dateDisplay}
     </div>
 </div>    
 `;
@@ -123,11 +145,26 @@ async function initializePortfolioList() {
         if (customPortfolio["ignore-content"].includes(it.name))
             continue;
         
-        if (customPortfolio["list-content"][it.name] != undefined) {
-            const target = customPortfolio["list-content"][it.name];
+        if (customPortfolio["modify-content"][it.name] != undefined) {
+            const target = customPortfolio["modify-content"][it.name];
             for(const cpKey in target) {
                 it[cpKey] = target[cpKey];
             }
+        }
+
+        for(const j of it["tools"]) {
+            filterSet.add(j);
+        }
+
+        PORTFOLIO_CONTENT_LIST.push(it);
+    }
+
+    for (const it of customPortfolio["custom-content"]) {
+        if (customPortfolio["ignore-content"].includes(it.name))
+            continue;
+        
+        if (it.rawDate == undefined && it.date != undefined) {
+            it.rawDate = Date.parse(it.date);
         }
 
         for(const j of it["tools"]) {

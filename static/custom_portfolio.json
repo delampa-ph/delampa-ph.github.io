@@ -1,16 +1,31 @@
 {
-    "list-content": {
+    "modify-content": {
         "delampa-ph.github.io": {
-            "tools": ["html", "css", "javascript"]
+            "tools": ["html", "css", "javascript", "json"]
         },
         "delampa-ph": {
             "tools": ["mkdwn"]
         }
     },
+    "custom-content": [
+        {
+            "icon-type": "bi bi-joystick",
+            "name": "Quick, Quack!",
+            "desc": "A 3D-platformer game to climb to the top and save your ducklings! Developed during internship with RLUX Studios. Now available on Switch!",
+            "link": "https://www.nintendo.com/us/store/products/quick-quack-switch/",
+            "bg-image": "https://assets.nintendo.com/image/upload/ar_16:9,b_auto:border,c_lpad/b_white/f_auto/q_auto/dpr_1.5/c_scale,w_1200/ncom/software/switch/70010000085695/add3254165cf56c8e4210ecc948068e8cdbe714325b2a9c672fb82fe7b3945da",
+            "date": "2025/3/13",
+            "tools": ["c#", "unity"]
+        }
+    ],
     "list-tag": {
         "html": {
             "icon": "devicon-html5-plain",
             "formalName": "HTML"
+        },
+        "c#": {
+            "icon": "devicon-csharp-plain",
+            "formalName": "C#"
         },
         "css": {
             "icon": "devicon-css3-plain",
@@ -20,9 +35,17 @@
             "icon": "devicon-javascript-plain",
             "formalName": "Javascript"
         },
+        "json": {
+            "icon": "devicon-json-plain",
+            "formalName": "JSON"
+        },
         "mkdwn": {
             "icon": "devicon-markdown-original",
             "formalName": "Markdown"
+        },
+        "unity": {
+            "icon": "devicon-unity-plain",
+            "formalName": "Unity"
         }
     },
     "ignore-content": []
