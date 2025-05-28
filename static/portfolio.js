@@ -185,7 +185,7 @@ async function initializePortfolioList() {
         const targetB = customPortfolio["list-tag"][b]
         if (targetA == undefined || targetB == undefined)
             return 1;
-        return targetA.formalName > targetB.formalName;
+        return targetA.formalName.localeCompare(targetB.formalName);
     })
 
     for (const it of finalizedFilterList) {
@@ -197,7 +197,7 @@ async function initializePortfolioList() {
     }
 
     PORTFOLIO_CONTENT_LIST.sort((a, b) => {
-        return a.rawDate < b.rawDate;
+        return b.rawDate - a.rawDate;
     });
 }
 
