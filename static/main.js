@@ -1,5 +1,5 @@
 const TOP_HEADER_CODE = `
-<div class="box boxCentered d-flex justify-content-between">
+<div class="box boxCentered d-flex justify-content-between fixed-top" style="border: 2px solid light-dark(#333446, #EAEFEF); ">
     <div class="d-flex gap-1">
         <a class="p-2" href="/"><i class="bi bi-house-fill"> Home</i></a>
         <a class="p-2" href="/resume.html"><i class="bi bi-suitcase-lg-fill"> Resume</i></a>
@@ -7,6 +7,7 @@ const TOP_HEADER_CODE = `
     </div>
     <a class="p-2"><i class="bi bi-brightness-high-fill" onclick="toggleLight()"></i></a>
 </div>
+<div style="padding: 2.1em; "></div>
 `
 
 const CREDIT_HEADER_CODE = `
