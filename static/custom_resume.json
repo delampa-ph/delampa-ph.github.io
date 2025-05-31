@@ -1,0 +1,51 @@
+{
+    "categoryInfo": [
+        {
+            "header": "Contact Information",
+            "info": [
+                {
+                    "iconType": "bi bi-file-person-fill",
+                    "headerKey": "Name",
+                    "headerValue": "Derek E. Lampa" 
+                },
+                {
+                    "iconType": "bi bi-geo-alt-fill",
+                    "headerKey": "Address",
+                    "headerValue": "Pandacaqui, Mexico, Pampanga" 
+                },
+                {
+                    "iconType": "bi bi-envelope-fill",
+                    "headerKey": "Email",
+                    "headerValue": "lampaderek@gmail.com",
+                    "headerLink": "mailto:lampaderek@gmail.com" 
+                },
+                {
+                    "iconType": "bi bi-backpack4-fill",
+                    "headerKey": "Portfolio",
+                    "headerValue": "Link",
+                    "headerLink": "/portfolio.html"
+                }
+            ]
+        },
+        {
+            "header": "Technical Skills",
+            "info": [
+                {
+                    "iconType": "bi bi-code-slash",
+                    "headerKey": "Languages",
+                    "headerValue": "C#, CSS, HTML, Javascript, Python"
+                },
+                {
+                    "iconType": "bi bi-wrench",
+                    "headerKey": "Tools",
+                    "headerValue": "Unity, Visual Studio Code"
+                },
+                {
+                    "iconType": "bi bi-git",
+                    "headerKey": "Version Control",
+                    "headerValue": "Git, GitHub"
+                }
+            ]
+        }
+    ]
+}
