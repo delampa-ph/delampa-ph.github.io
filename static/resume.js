@@ -72,18 +72,39 @@ function appendInfoHTML(info, targetDiv) {
         infoDiv.append(infoName);
 
         const infoDate = document.createElement("p");
-        infoDate.setAttribute("class", "bi bi-calendar-fill fs-6");
+        const dateIcon = document.createElement("i");
+        const dateSpan = document.createElement("span");
+        dateIcon.setAttribute("class", "bi bi-calendar-fill");
+        infoDate.setAttribute("class", "fs-6");
         infoDate.setAttribute("style", "margin-bottom: 0px;");
-        infoDate.innerText = ` ${infoVal.date}`;
+        if (siding % 2 == 1) {
+            dateSpan.innerText = ` ${infoVal.date}`;
+            infoDate.append(dateIcon);
+            infoDate.append(dateSpan);
+        } else {
+            dateSpan.innerText = `${infoVal.date} `;
+            infoDate.append(dateSpan);
+            infoDate.append(dateIcon);
+        }
         infoDiv.append(infoDate);
         
-        let positionIcon = "bi bi-person-vcard-fill"
-        if (infoVal.positionIcon != undefined)
-            positionIcon = infoVal.positionIcon;
         const infoPosition = document.createElement("p")
-        infoPosition.setAttribute("class", `${positionIcon} fw-bold`);
+        let positionIcon = document.createElement("i");
+        let positionSpan = document.createElement("span");
+        positionIcon.setAttribute("class", "bi bi-person-vcard-fill");
+        if (infoVal.positionIcon != undefined)
+            positionIcon.setAttribute("class", infoVal.positionIcon);
+        infoPosition.setAttribute("class", `fw-bold`);
         infoPosition.setAttribute("style", "margin-bottom: 1em;")
-        infoPosition.innerText = ` ${infoVal.position}`;
+        if (siding % 2 == 1) {
+            positionSpan.innerText = ` ${infoVal.position}`;
+            infoPosition.append(positionIcon);
+            infoPosition.append(positionSpan);
+        } else {
+            positionSpan.innerText = `${infoVal.position} `;
+            infoPosition.append(positionSpan);
+            infoPosition.append(positionIcon);
+        }
         infoDiv.append(infoPosition);
 
         if (infoVal.description != undefined) {

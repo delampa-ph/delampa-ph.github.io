@@ -92,7 +92,8 @@
                 "link": "https://www.facebook.com/Bloomingfieldsacademy/"
             },
             "date": "2013 — 2021",
-            "position": "High School — STEM"
+            "position": "High School — STEM",
+            "positionIcon": "bi bi-book-fill"
         }
     ]
 }
