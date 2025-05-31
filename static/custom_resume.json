@@ -47,5 +47,52 @@
                 }
             ]
         }
+    ],
+    "workInfo": [
+        {
+            "name": "RLUX Studios",
+            "image": {
+                "src": "/static/images/rlux-studio-logo.png",
+                "link": "https://www.rluxcustoms.com/studios"
+            },
+            "date": "June 2024 — September 2024",
+            "position": "Intern — Game Developer",
+            "description": "Worked with developing the core architecture of <i>Quick, Quack!</i> and other games. I also provided assistance in Game Design and collaboration with the team for game testing, brain storming of ideas, and assistance in 3D Modelling. Throughout my internship in the company, I learnt a lot of experience in Game Development and appreciated the RLUX Studios' friendly and enjoying workspace."
+        }
+    ],
+    "educationInfo": [
+        {
+            "name": "Holy Angel University",
+            "image": {
+                "src": "/static/images/HAU-seal.png",
+                "link": "https://www.hau.edu.ph/"
+            },
+            "date": "July 2021 — April 2025",
+            "position": "Graduate — Bachelor of Science in Entertainment and Multimedia Computing with Area of Specialization in Digital Animation",
+            "positionIcon": "bi bi-book-fill",
+            "awards": [
+                {
+                    "name": "Dean's List",
+                    "value": "1.571 GWA (1st Semester, 2022-2023)"
+                },
+                {
+                    "name": "President's List",
+                    "value": "1.250 GWA (2nd Semester, 2021-2022)"
+                },
+                {
+                    "name": "Dean's List",
+                    "value": "1.500 GWA (1st Semester, 2021-2022)"
+                }
+            ]       
+        },
+        {
+            "name": "Bloomingfields Academny Foundation Inc",
+            "image": {
+                "src": "/static/images/BAFI-seal.png",
+                "link": "https://www.facebook.com/Bloomingfieldsacademy/"
+            },
+            "date": "2013 — 2021",
+            "position": "High School — STEM"
+        }
     ]
 }
