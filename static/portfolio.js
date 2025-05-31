@@ -204,7 +204,7 @@ async function initializePortfolioList() {
 function updatePortfolioContent() {
     PORTFOLIO_CONTENT_PARENT_HTML.innerHTML = ""
     initializePortfolioList().then(() => {
-        for(const it of document.getElementsByClassName("loaderSpace")) {
+        for(const it of document.getElementsByClassName("spinner-border")) {
             it.setAttribute("style", "display: none;")
         }
 

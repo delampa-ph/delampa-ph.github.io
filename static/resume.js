@@ -176,6 +176,10 @@ async function loadResumeJSON() {
     appendTopInfoHTML(resumeJSON["categoryInfo"])
     appendInfoHTML(resumeJSON["workInfo"], WORK_HTML);
     appendInfoHTML(resumeJSON["educationInfo"], EDUCATION_HTML);
+
+    for(const it of document.getElementsByClassName("spinner-border")) {
+        it.setAttribute("style", "display: none;");
+    }
 }
 
 loadResumeJSON();
